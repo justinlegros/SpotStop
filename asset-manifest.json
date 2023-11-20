@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/SpotStop/static/css/main.24a1f0c8.css",
-    "main.js": "/SpotStop/static/js/main.cfee2483.js",
-    "static/js/787.f36941e2.chunk.js": "/SpotStop/static/js/787.f36941e2.chunk.js",
-    "static/media/skateappback.png": "/SpotStop/static/media/skateappback.fde9518d0ad4f4600a53.png",
-    "static/media/conti.jpeg": "/SpotStop/static/media/conti.46f2e19dad5d5c6b5c1e.jpeg",
-    "static/media/EconoSansPro-65Medium.ttf": "/SpotStop/static/media/EconoSansPro-65Medium.642aad5fbcb8c3f0f343.ttf",
-    "static/media/Stapel_Regular.ttf": "/SpotStop/static/media/Stapel_Regular.3a0c4553fc494c4f03ff.ttf",
-    "static/media/Striker.otf": "/SpotStop/static/media/Striker.c3f6482e1c51c195db80.otf",
-    "static/media/skatespotblue.png": "/SpotStop/static/media/skatespotblue.8f0c85228e1e9c57dc9c.png",
-    "static/media/compass.svg": "/SpotStop/static/media/compass.ba62b6abc30caf041e1471228a78dc03.svg",
-    "static/media/skateboard.svg": "/SpotStop/static/media/skateboard.feacf4c373ca9e51f41bfbb6a0174561.svg",
-    "index.html": "/SpotStop/index.html",
-    "main.24a1f0c8.css.map": "/SpotStop/static/css/main.24a1f0c8.css.map",
-    "main.cfee2483.js.map": "/SpotStop/static/js/main.cfee2483.js.map",
-    "787.f36941e2.chunk.js.map": "/SpotStop/static/js/787.f36941e2.chunk.js.map"
+    "main.css": "/static/css/main.a37572bb.css",
+    "main.js": "/static/js/main.e03b74ea.js",
+    "static/js/787.f36941e2.chunk.js": "/static/js/787.f36941e2.chunk.js",
+    "static/media/skateappback.png": "/static/media/skateappback.fde9518d0ad4f4600a53.png",
+    "static/media/conti.jpeg": "/static/media/conti.46f2e19dad5d5c6b5c1e.jpeg",
+    "static/media/EconoSansPro-65Medium.ttf": "/static/media/EconoSansPro-65Medium.642aad5fbcb8c3f0f343.ttf",
+    "static/media/Stapel_Regular.ttf": "/static/media/Stapel_Regular.3a0c4553fc494c4f03ff.ttf",
+    "static/media/Striker.otf": "/static/media/Striker.c3f6482e1c51c195db80.otf",
+    "static/media/skatespotblue.png": "/static/media/skatespotblue.8f0c85228e1e9c57dc9c.png",
+    "static/media/compass.svg": "/static/media/compass.ba62b6abc30caf041e1471228a78dc03.svg",
+    "static/media/skateboard.svg": "/static/media/skateboard.feacf4c373ca9e51f41bfbb6a0174561.svg",
+    "index.html": "/index.html",
+    "main.a37572bb.css.map": "/static/css/main.a37572bb.css.map",
+    "main.e03b74ea.js.map": "/static/js/main.e03b74ea.js.map",
+    "787.f36941e2.chunk.js.map": "/static/js/787.f36941e2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.24a1f0c8.css",
-    "static/js/main.cfee2483.js"
+    "static/css/main.a37572bb.css",
+    "static/js/main.e03b74ea.js"
   ]
 }
