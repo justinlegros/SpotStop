@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/SpotStop/static/css/main.24a1f0c8.css",
-    "main.js": "/SpotStop/static/js/main.9e8ad1a3.js",
+    "main.js": "/SpotStop/static/js/main.4674a23a.js",
     "static/js/787.f36941e2.chunk.js": "/SpotStop/static/js/787.f36941e2.chunk.js",
     "static/media/skateappback.png": "/SpotStop/static/media/skateappback.fde9518d0ad4f4600a53.png",
     "static/media/conti.jpeg": "/SpotStop/static/media/conti.46f2e19dad5d5c6b5c1e.jpeg",
@@ -13,11 +13,11 @@
     "static/media/skateboard.svg": "/SpotStop/static/media/skateboard.feacf4c373ca9e51f41bfbb6a0174561.svg",
     "index.html": "/SpotStop/index.html",
     "main.24a1f0c8.css.map": "/SpotStop/static/css/main.24a1f0c8.css.map",
-    "main.9e8ad1a3.js.map": "/SpotStop/static/js/main.9e8ad1a3.js.map",
+    "main.4674a23a.js.map": "/SpotStop/static/js/main.4674a23a.js.map",
     "787.f36941e2.chunk.js.map": "/SpotStop/static/js/787.f36941e2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.24a1f0c8.css",
-    "static/js/main.9e8ad1a3.js"
+    "static/js/main.4674a23a.js"
   ]
 }
