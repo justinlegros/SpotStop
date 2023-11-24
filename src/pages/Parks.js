@@ -1,4 +1,5 @@
 import React from "react";
+import {useEffect} from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -24,6 +25,8 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
+
+import axios from "axios";
 
 import { PropTypes } from 'react'
 
@@ -65,6 +68,10 @@ const options = {
   mapTypeControl: true,
 }
 
+const markersList = [];
+
+
+
 function Poppy(input) {
     
   return
@@ -73,8 +80,6 @@ function Poppy(input) {
 var temp = "Results";
 
 export default function Parks() {
-
-  const markersList = [];
 
   const [isActive, setIsActive] = React.useState(false);
 
@@ -99,6 +104,44 @@ export default function Parks() {
       libraries,
   });
 
+  var fetchListHold = (function() {
+    var executed = false;
+    return function() {
+        if (!executed) {
+          fetchList();
+            executed = true;
+            // do something
+        }
+    };
+})();
+  
+  const sendServerList = async (markerSen) => {
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = (markerTemp) => {
+      if (req.readyState == XMLHttpRequest.DONE) {
+        console.log(req.responseText);
+      }
+    };
+
+    req.open("ADD", "https://api.jsonbin.io/v3/b/655e788e54105e766fd3be2c", true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.setRequestHeader("X-Master-Key", "$2a$10$Biuse.c0h9wCBq4UrVBho.b5W2Zu8owD1.2vCB3qqZCpY.yrx7eNO");
+    console.log(markerSen)
+    req.send('{"sample": "Testing"}');
+  }
+
+  /* [{"name":"Server Test","desc":"Click Icon/Edit to change info","lat":32.242897,"lng":-110.958477,"time":"Test","img":"/SpotStop/static/media/conti.46f2e19dad5d5c6b5c1e.jpeg"}]},"metadata":{"id":"655e788e54105e766fd3be2c","private":false,"createdAt":"2023-11-22T21:54:22.233Z"}}
+  */
+  const fetchList = async () => {
+    const res = await axios.get("https://api.jsonbin.io/v3/b/655e788e54105e766fd3be2c");
+    var marks = res.data.record.markersServer;
+    marks.forEach(m => { 
+      markers.push(m);
+    })
+    setSelected(markers[0]);
+    setSelected(null);
+  }
 
   const [selected, setSelected] = React.useState(null);
 
@@ -110,13 +153,12 @@ export default function Parks() {
         
     
     setMarkers((current) => [...current, {
-      
       name: "Click Icon/Edit to change info",
       desc: "Click Icon/Edit to change info",
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
-      time: new Date(),
       img: park,
+      time: new Date(),
    
     }]) }, []);
 
@@ -124,7 +166,24 @@ export default function Parks() {
 
   const onMapLoad = React.useCallback( (map) => {
     mapRef.current = map;
+    console.log("here");
+    
   }, [])
+
+  const markerChange = React.useCallback( (markerList) => {
+    var tempmarkersList = [
+    ];
+    markerList.forEach(m => {
+      var Lt = m.lat;
+      var Lng = m.lng;
+      var locate = new window.google.maps.LatLng(parseFloat(Lt), parseFloat(Lng)); 
+      if (mapRef.current.getBounds().contains(locate)) {
+        tempmarkersList.push(m);
+      }
+    })
+    console.log(tempmarkersList);
+    createResultList(tempmarkersList);
+  }, []);
 
   const panTo = React.useCallback(({lat,lng}) => {
     mapRef.current.panTo({lat,lng});
@@ -163,8 +222,8 @@ export default function Parks() {
     </div>
       <h2 id="landing-header">Find Your Next Spot!</h2>
      </div>
-     <div className="MapSection"> 
-     <div className="MapWindow">
+     <div className="MapSection" /* onLoad={fetchListHold } */> 
+     <div className="MapWindow" id="MapWindow" >
      <Link to="/">
      <h1><span role="img" aria-label="skate"><img alt="" src={logo} /></span> <button id="contact-btn"> CONTACT</button> </h1>
      
@@ -178,11 +237,13 @@ export default function Parks() {
           options ={options}
           onClick = {onMapClick}
           onLoad = {onMapLoad}
+          onDragEnd = {() => {markerChange(markers)}}
       >
+
         {markers.map((marker)=> (
         <Marker 
           className = "marker-temp"
-          key={ marker.time.toISOString()} 
+          
           position={{lat: marker.lat, lng: marker.lng,}}
           icon = {{
             url: icon,
@@ -193,6 +254,15 @@ export default function Parks() {
           onClick= { () => {
             setSelected(marker);
           }}
+
+          onLoad= { () => {
+            markersList.push(marker);
+            markerChange(markers);
+            console.log(markers);
+          }}
+
+        
+
         /> 
         ))}
         {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng}} onCloseClick={() => {
@@ -203,18 +273,28 @@ export default function Parks() {
           
           <div >
           <h1 id="razor" > {selected.name}</h1>
-          <p> Spot Added {formatRelative(selected.time, new Date())}</p>
+          <p> Spot Added </p>
           <button > Delete</button>
           
           </div>
         </InfoWindow>) : null}
-      </GoogleMap>    
+        
+      </GoogleMap>  
+        
      </div>
         <div className="results-container"id="results-box" >
           <h3> {getSearchInput()} </h3>
-          <ul className="results-list"   style={{maxHeight: '100%', overflow: 'auto'}} >
-            {markers.map(marker => (
-              <>
+          <ul className="results-list" id="results-list-ul" style={{maxHeight: '100%', overflow: 'auto'}}>
+            
+          </ul>
+        </div>
+     </div>
+    </>
+  );
+}
+
+/*
+<>
               <ul id="main" className="results-ul" onClick={handleClick}>
               <li id="results-img" className="results-img"> 
               <img className="img-img" alt="" src= {marker.img}/>
@@ -228,12 +308,54 @@ export default function Parks() {
               </li>
               </ul>
               </>
-            ))}
-          </ul>
-        </div>
-     </div>
-    </>
-  );
+*/
+
+
+export function createResultList(markers) {
+  if (document.getElementById('results-list-ul')) {
+  let currList = document.getElementById('results-list-ul');
+    while (currList.firstChild) {
+      currList.removeChild(currList.firstChild);
+    }
+  }
+  if (markers.length > 0) {
+
+  markers.forEach(m => {
+    
+
+  var ulCont = document.getElementById("results-list-ul");
+  var ulNew = document.createElement("ul");
+  var liImgli = document.createElement('li');
+  var liName = document.createElement('li');
+  var liImg = document.createElement('img');
+  var pName = document.createElement('p');
+  var pDesc = document.createElement('p');
+  var editButton = document.createElement('button');
+  var pLoc = document.createElement('p');
+  ulNew.setAttribute("id", "main");
+  ulNew.setAttribute("className", "results-ul");
+  liImgli.setAttribute("id", "results-img");
+  liImgli.setAttribute("className", "results-img");
+  liName.setAttribute("id", "main");
+  liImg.setAttribute("className", "img-img");
+  liImg.src = m.img;
+  pName.setAttribute("id", "spot-list-name");
+  pDesc.setAttribute("id", "spot-list-description");
+  pLoc.setAttribute("id", "spot-list-location");
+  liImgli.appendChild(liImg)
+  pName.appendChild(document.createTextNode(m.name));
+  pDesc.appendChild(document.createTextNode(m.desc));
+  pLoc.appendChild(document.createTextNode('Tucson AZ'));
+  liName.appendChild(liImgli)
+  liName.appendChild(pName);
+  liName.appendChild(pDesc);
+  liName.appendChild(pLoc);
+  ulNew.appendChild(liName);
+  if (ulCont) {
+    ulCont.appendChild(ulNew);
+  }
+  })
+  }
 }
 
 export function checkMarker(selected, markers) {
