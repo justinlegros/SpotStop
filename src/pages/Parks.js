@@ -47,6 +47,10 @@ import myFunction from "../components/test";
 //     marker button -> function (creates popup) -> pop up form
 
 
+// Server Password Mongo SxsIrWlEwjJlg2if
+
+// connection string mongodb+srv://Markers:<password>@cluster0.vzriwlc.mongodb.net/?retryWrites=true&w=majority
+
 const libraries = ["places"];
 
 const mapContainerStyle = {
@@ -70,12 +74,15 @@ const options = {
 
 const markersList = [];
 
+const herokuURL = "https://spotstop-api-f400277ee2b4.herokuapp.com/"
 
-
-function Poppy(input) {
-    
-  return
+async function loadMarkServer(marker) {
+  const response = await fetch(herokuURL);
+  const data = await response.json();
+  axios.post(herokuURL,marker)
+  console.log(data);
 }
+ 
 
 var temp = "Results";
 
@@ -115,7 +122,7 @@ export default function Parks() {
     };
 })();
   
-  const sendServerList = async (markerSen) => {
+const sendServerList = async (markerSen) => {
     let req = new XMLHttpRequest();
 
     req.onreadystatechange = (markerTemp) => {
@@ -216,11 +223,12 @@ export default function Parks() {
                     <button id="close-btn" onClick={() => {document.getElementById("popup").style.display = 'none'; setSelected(null)} }> </button>
             </div>
       </div>
+      <h2 id="landing-header">Find Your Next Spot!</h2>
      <div className="parks-header">
      <Search panTo={panTo}/>
      <div id="whtebox">
     </div>
-      <h2 id="landing-header">Find Your Next Spot!</h2>
+      
      </div>
      <div className="MapSection" /* onLoad={fetchListHold } */> 
      <div className="MapWindow" id="MapWindow" >
@@ -259,6 +267,7 @@ export default function Parks() {
             markersList.push(marker);
             markerChange(markers);
             console.log(markers);
+            loadMarkServer(marker);
           }}
 
         
